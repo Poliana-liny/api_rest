@@ -1,0 +1,86 @@
+package com.remedios.poliana.curso.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.remedios.poliana.curso.remedio.DadosAtualizarRemedio;
+import com.remedios.poliana.curso.remedio.DadosCadastroRemedio;
+import com.remedios.poliana.curso.remedio.DadosListaRemedio;
+import com.remedios.poliana.curso.remedio.Remedio;
+import com.remedios.poliana.curso.remedio.RemedioRepository;
+import com.remedios.poliana.curso.remedio.dadosDetalhamentoRemedio;
+
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+
+@RestController
+@RequestMapping("/medicamento")
+public class RemedioController {
+	
+	@Autowired
+	private RemedioRepository repository;
+	
+	@PostMapping
+	@Transactional
+	public ResponseEntity<T> cadastrar(@RequestBody @Valid DadosCadastroRemedio dados) {
+		repository.save (new Remedio(dados));	
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<DadosListaRemedio>> listar (){
+		var lista = repository.findAllByAtivoTrue().stream().map(DadosListaRemedio::new).toList();
+		
+		return ResponseEntity.ok(lista);
+	}
+	
+	@PutMapping
+	@Transactional
+	public ResponseEntity<dadosDetalhamentoRemedio> atualizar(@RequestBody @Valid DadosAtualizarRemedio dados) {
+		var remedio = repository.getReferenceById(dados.id());
+		remedio.atualizarInformacoes(dados);
+		
+		return ResponseEntity.ok(new dadosDetalhamentoRemedio(remedio));
+	
+	}
+	
+	@DeleteMapping("/{id}")
+	@Transactional
+	public ResponseEntity<Void> excluir (@PathVariable Long id) {
+		repository.deleteById(id);
+		
+		return ResponseEntity.noContent().build();
+		
+	}
+	
+	@DeleteMapping("inativar/{id}")
+	@Transactional
+	public ResponseEntity<Void> inativar (@PathVariable Long id) {
+		var remedio = repository.getReferenceById(id);
+		remedio.inativar();
+		
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping("ativar/{id}")
+	@Transactional
+	public ResponseEntity<Void> ativar(@PathVariable Long id) {
+	    var remedio = repository.getReferenceById(id);
+	    remedio.ativar(); // método que você implementa na classe para definir o status como ativo
+	    repository.save(remedio); // salva a alteração no banco de dados
+	    
+	    return ResponseEntity.noContent().build();
+	}
+
+
+}

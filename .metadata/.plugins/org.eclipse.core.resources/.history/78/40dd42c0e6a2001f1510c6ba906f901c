@@ -1,0 +1,5 @@
+package com.remedios.poliana.curso.infra;
+
+public record DadosTokenJWT() {
+
+}

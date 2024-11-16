@@ -1,0 +1,5 @@
+package com.poliana.crud.repositories;
+
+public interface ProductRepository {
+
+}

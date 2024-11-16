@@ -1,0 +1,11 @@
+package com.remedios.poliana.curso.remedio;
+
+import java.time.LocalDate;
+
+public record DadosListaRemedio(String nome, Via via, String lote, Laboratorio laboratorio, LocalDate validade) {
+	
+	public DadosListaRemedio(Remedio remedio) {
+		this (remedio.getNome(), remedio.getVia(), remedio.getLote(), remedio.getLaboratorio(), remedio.getValidade());
+	}
+
+}

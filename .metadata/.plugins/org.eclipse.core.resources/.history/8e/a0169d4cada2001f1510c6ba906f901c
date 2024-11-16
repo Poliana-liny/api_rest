@@ -1,0 +1,5 @@
+package com.remedios.poliana.curso.usuarios;
+
+public interface UsuarioRepository {
+
+}

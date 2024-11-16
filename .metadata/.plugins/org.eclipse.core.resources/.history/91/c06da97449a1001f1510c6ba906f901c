@@ -1,0 +1,27 @@
+package com.remedios.poliana.curso.remedio;
+
+import java.time.LocalDate;
+
+public record dadosDetalhamentoRemedio(
+		Long id, 
+		String nome, 
+		Via via, 
+		String lote, 
+		int quantidade, 
+		LocalDate validade, 
+		Laboratorio laboratorio,
+		boolean ativo) {
+	
+	public dadosDetalhamentoRemedio(Remedio remedio) {
+		this(remedio.getId(),
+			 remedio.getNome(),
+			 remedio.getVia(), 
+			 remedio.getLote(), 
+			 remedio.getQuantidade(),
+			 remedio.getValidade(),
+			 remedio.getLaboratorio(), 
+			 remedio.isAtivo();
+	}
+	
+
+}

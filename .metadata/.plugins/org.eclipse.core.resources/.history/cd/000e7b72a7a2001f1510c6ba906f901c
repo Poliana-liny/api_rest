@@ -1,0 +1,11 @@
+CREATE TABLE medicamento (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    via VARCHAR(100) NOT NULL,
+    lote VARCHAR(100) NOT NULL,
+    quantidade INT NOT NULL,  -- Alterado para INT
+    validade DATE NOT NULL,    -- Alterado para DATE
+    laboratorio VARCHAR(100) NOT NULL,
+    
+    PRIMARY KEY (id)
+);

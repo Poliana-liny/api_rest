@@ -1,0 +1,5 @@
+package com.remedios.poliana.curso.remedio;
+
+public record dadosDetalhamentoRemedio() {
+
+}
